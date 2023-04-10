@@ -7,6 +7,7 @@ const addtoCart = async (body) => {
       product: body.product,
       customer: body.customer,
     });
+    
     if (existCart) {
       const update = await CART.findByIdAndUpdate(
         { _id: existCart._id },
@@ -14,7 +15,7 @@ const addtoCart = async (body) => {
           quantity: existCart.quantity + body.quantity,
         }
       );
-
+     
       const newCart = await CART.find({ customer: existCart.customer });
 
       return {
@@ -23,6 +24,7 @@ const addtoCart = async (body) => {
         success: true,
       };
     }
+   
     const newCart = new CART(body);
     await newCart.save();
     const cartCustomer = await CART.find({ customer: body.customer });
