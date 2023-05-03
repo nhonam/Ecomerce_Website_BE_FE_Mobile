@@ -104,14 +104,29 @@ const getStatusId = async (id) => {
     };
   }
 };
-const update_status_order = async (id, body) => {
+const confirmSellProduct = async (id) => {
   try {
-    const status_order_customer = await Status_Orders.findOne({ id_order: id });
-    if (!status_order_customer)
-      return {
-        message: "Can't get status of order!",
-        success: false,
-      };
+// console.log(id)
+// const ad = await Status_Orders.findById({_id: "63aff6c36abf949a048f4fdd"})
+// return{
+//   data: ad,
+//   success:  true
+// }
+// console.log(ad)
+    const confirm =  await Status_Orders.findByIdAndUpdate(
+      { _id: id.id },
+      { status: "SHIPPING" }
+    );
+  
+    if (confirm)
+        {
+          const data= await Status_Orders.findById({_id: id.id})
+          return {
+            data : data,
+            message: "successful sale confirmed!!!",
+            success: true,
+          };
+        }
   } catch (error) {
     return {
       message: "An error occured!",
@@ -123,5 +138,6 @@ module.exports = {
   buyProduct,
   getStatusByUser,
   getStatusBySeller,
-  getStatusId
+  getStatusId,
+  confirmSellProduct
 };

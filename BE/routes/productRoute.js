@@ -12,6 +12,8 @@ router.post("/update/:id", Controller.updateProduct)
 router.get("/item/:id", Controller.getProduct)
 router.delete('/delete/:id', Controller.deleteProduct)
 router.get("/get/allProduct", Controller.getAllProduct)
+
+router.get("/get/allCategory", Controller.getAllCategory)
 router.post("/get/type",Controller.getTypeProduct)
 router.get("/search/item",Controller.searchProduct)
 router.get("/get/allProduct/:id",Controller.getAllProductByCategory)

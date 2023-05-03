@@ -3,7 +3,7 @@ const controller = require("./controller");
 
 const register = async (req, res) => {
   try {
-    console.log(req.body);
+   
     const resAuth = await adminService.register(req.body);
     if (!resAuth.success)
       return controller.sendError(res, resAuth.message, 300);
@@ -36,9 +36,9 @@ const getAuth = async (req, res) => {
     return controller.sendError(res);
   }
 };
-const sendMail = async(req, res)=>{
+const sendMail =async (req, res)=>{
   try {
-    const resAuth = await adminService.sendMail(req.body)
+    const resAuth =await  adminService.sendMail(req.body)
     if(!resAuth.success) return  controller.sendError(res, resAuth.message,300)
     return controller.sendSuccess(res, resAuth.data, 200, resAuth.message)
   } catch (error) {
@@ -70,11 +70,26 @@ const updateProfile=async (req, res) => {
     return controller.sendError(res);
   }
 };
+
+const updatePatchProfile=async (req, res) => {
+  try {
+    const id= req.body.id
+    delete req.body.id
+    // console.log(req.body);
+    const resServices = await adminService.updateProfile(id, req.body)
+    if (!resServices.success)
+      return controller.sendError(res, resServices.message, 300);
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message);
+  } catch (error) {
+    return controller.sendError(res);
+  }
+};
 module.exports = Controller = {
   register,
   login,
   getAuth,
   sendMail,
   verifyUser,
-  updateProfile
+  updateProfile,
+  updatePatchProfile
 };

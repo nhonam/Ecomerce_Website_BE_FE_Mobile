@@ -31,7 +31,7 @@ const Status_Orders = new Schema({
   },
   status: {
     type: String,
-    enum: ["PENDING", "REFUND", "REJECTED", "COMPLETED"],
+    enum: ["PENDING","SHIPPING" , "REFUND", "REJECTED", "COMPLETED"],
     default: "PENDING",
 
   },

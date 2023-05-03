@@ -4,10 +4,40 @@ const cloudinary = require("cloudinary");
 const getAllProduct = async () => {
   try {
     const product = await Product.find({});
+    
+
     return {
       message: "Successfully get Product",
       success: true,
       data: product,
+    };
+  } catch (err) {
+    return {
+      message: "An error occurred",
+      success: false,
+    };
+  }
+};
+
+const getAllCategory = async () => {
+  try {
+ 
+    const  product=await Product.find({});
+    console.log(product[0].category);
+    const categorylist=[]
+    for (let index = 0; index < product.length; index++) {
+      categorylist.push(product[index].category)
+     
+    }
+
+    const unique = categorylist.filter(
+      (obj, index) =>
+      categorylist.findIndex((item) => item=== obj) === index
+    );
+    return {
+      message: "Successfully get Product",
+      success: true,
+      data: unique,
     };
   } catch (err) {
     return {
@@ -36,6 +66,9 @@ const updatePathProduct = async (id, body) => {
     const existProduct = await Product.findById({ _id: id });
    
     if(body.image) {
+      // const test= async ()=>{
+      //    await myCloud
+      // }
      
       const myCloud = await cloudinary.v2.uploader.upload(body.image, {
         folder: "products",
@@ -274,6 +307,7 @@ module.exports = {
   searchProduct,
   getTypeProduct,
   updatePathProduct,
-  getAllProductByCategory
+  getAllProductByCategory,
+  getAllCategory
 };
 

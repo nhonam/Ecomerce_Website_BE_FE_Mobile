@@ -10,9 +10,13 @@ const jwtService = require("../services/jwt.service");
 router.get("/getUser", jwtService.verify, Controller.getAuth);
 router.post("/register", Controller.register);
 router.post("/updateProfile", Controller.updateProfile);
+router.patch("/updatePatchProfile", Controller.updatePatchProfile);
+
 
 router.post("/login", Controller.login);
 router.post("/verify/seller", Controller.sendMail);
 router.post("/verify/seller/:id", Controller.verifyUser);
+
+
 
 module.exports = router;
