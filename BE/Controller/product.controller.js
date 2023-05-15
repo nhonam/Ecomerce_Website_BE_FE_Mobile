@@ -18,6 +18,39 @@ const createProduct = async (req, res) => {
   }
 };
 
+const checkProductExist = async( req, res) => {
+  try {
+   
+    const proExist = await productService.getProduct(req.params.id, req.body); 
+    if(proExist.success){
+      const productSer = await productService.deleteProduct(req.params.id);
+      console.log("da xoa sp vi trung nhau");
+      if (!productSer.success)
+      return controller.sendError(res, productSer.message, 300);
+    return controller.sendSuccess(res, {}, 200, productSer.message);
+    }
+    console.log(proExist.success);
+   
+   
+    return controller.sendError(res, proExist, 300);
+  } catch (error) {
+    return controller.sendError(res);
+  }
+}
+
+const getProductMonthyear = async( req, res) => {
+  try {
+   console.log(req.params);
+    const count = await productService.getCountProduct( req.params.id); 
+    if(count.success){
+    return controller.sendSuccess(res, {}, 200, count);
+    }
+    return controller.sendError(res, count, 300);
+  } catch (error) {
+    return controller.sendError(res);
+  }
+}
+
 const getAllProductByCategory = async (req, res) => {
   try {
     console.log(req.params.id);
@@ -144,6 +177,23 @@ const getProductBySeller = async (req, res) => {
     return controller.sendError(res);
   }
 };
+
+const getTopProduct = async (req, res) => {
+  try {
+    console.log(req.body);
+    const productSer = await productService.gettopProductBySeller(req.body);
+    if (!productSer.success)
+      return controller.sendError(res, productSer.message, 300);
+    return controller.sendSuccess(
+      res,
+      productSer.data,
+      200,
+      productSer.message
+    );
+  } catch (error) {
+    return controller.sendError(res);
+  }
+};
 const searchProduct = async (req, res) => {
   try {
     const productSer = await productService.searchProduct(req.body);
@@ -170,5 +220,8 @@ module.exports = Controller = {
   searchProduct,
   getAllProductByCategory,
   patchProduct,
-  getAllCategory
+  getAllCategory,
+  checkProductExist,
+  getTopProduct,
+  getProductMonthyear
 };

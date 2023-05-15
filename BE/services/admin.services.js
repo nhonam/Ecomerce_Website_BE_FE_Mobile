@@ -6,7 +6,16 @@ const Speakeasy = require("speakeasy");
 const nodemailer = require("nodemailer");
 const { use } = require("../routes/aiRoute");
 const cloudinary = require("cloudinary");
-
+function formatDate(m) {
+  new Date(m);
+  const dateString =
+    m.getUTCFullYear() +
+    "-" +
+    ("0" + (m.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + m.getDate()).slice(-2)
+  return dateString;
+}
 const register = async (body) => {
   try {
 
@@ -84,6 +93,8 @@ const login = async (body) => {
       };
     }
     const token = jwtService.createToken(admin._id);
+    admin.birthday= formatDate(new Date(admin.birthday))
+    console.log(admin.birthday);
     return {
       message: "Login Successfully!",
       success: true,

@@ -8,11 +8,15 @@ const jwtService = require("../services/jwt.service");
 
 router.post("/create", Controller.createProduct);
 router.post("/getbyseller", Controller.getProductBySeller);
+router.post("/get-top-product", Controller.getTopProduct);
+
 router.post("/update/:id", Controller.updateProduct)
+
 router.get("/item/:id", Controller.getProduct)
 router.delete('/delete/:id', Controller.deleteProduct)
 router.get("/get/allProduct", Controller.getAllProduct)
-
+router.post("/check-product/:id", Controller.checkProductExist)
+router.get("/get-product-myear/:id", Controller.getProductMonthyear)
 router.get("/get/allCategory", Controller.getAllCategory)
 router.post("/get/type",Controller.getTypeProduct)
 router.get("/search/item",Controller.searchProduct)

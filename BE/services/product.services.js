@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const ADMIN = require("../models/Admin");
 const cloudinary = require("cloudinary");
+const { body } = require("../authenticator");
 const getAllProduct = async () => {
   try {
     const product = await Product.find({});
@@ -131,18 +132,109 @@ const getTypeProduct = async(body)=>{
     }
   }
 }
-const getProduct = async (body) => {
+const getProduct = async (id, body) => {
   try {
+   
+    // const product = await Product.find({ name_product:body.name_product,tag:body.tag, price:body.price, quantity:body.quantity });
+    
     console.log(body);
-    const product = await Product.findById({_id:body.id});
-    if (!product)
+    const productcheck = await Product.aggregate([
+      {
+        $match: {
+          $and: [
+            {
+              name_product: body.name_product
+            },
+            {
+              tag: body.tag
+            },
+            {
+              price: body.price
+            },
+          
+          ]
+        }
+      },
+      {
+        $group: {
+         _id: {
+          name_product: "$name_product",
+          tag: "$tag", 
+          price:"$price"
+              
+              },
+          count: {
+            $sum: 1
+          },
+          ids: {
+            $push: "$Id"
+          }
+        }
+      },
+      {
+        $match: {
+          count: {
+            $gt: 1
+          }
+        }
+      }
+    ])
+
+    console.log("------------");
+    console.log(productcheck);
+    console.log(productcheck[0].count);
+
+    if (productcheck[0].count>=2)
       return {
         message: "Product no found!",
-        success: false,
+        success: true,
+      
       };
-      console.log(product);
+      console.log("chua xoa");
     return {
       message: "Successfully get product",
+      success: false,
+     
+    };
+  } catch (error) {
+    return {
+      message: "An error occurred",
+      success: false,
+    };
+  }
+};
+
+const getCountProduct = async (id) => {
+  try {
+    console.log("nâm");
+    const find = await Status_Orders.find({ shop: id });
+    console.log("find",find);
+    return {
+      data: find,
+      message: "Tìm kiếm thành công",
+      success: true,
+    };
+  } catch (error) {
+    return {
+      message: "Lỗi ss",
+      success: false,
+    };
+  }
+};
+
+
+
+
+const getProductBySeller = async (body) => {
+  try {
+    const product = await Product.find(body);
+    if (!product)
+      return {
+        message: "Can't get product of seller!",
+        success: false,
+      };
+    return {
+      message: "Successfully get products",
       success: true,
       data: product,
     };
@@ -154,9 +246,12 @@ const getProduct = async (body) => {
   }
 };
 
-const getProductBySeller = async (body) => {
+const gettopProductBySeller = async (body) => {
   try {
     const product = await Product.find(body);
+
+
+    
     if (!product)
       return {
         message: "Can't get product of seller!",
@@ -308,6 +403,8 @@ module.exports = {
   getTypeProduct,
   updatePathProduct,
   getAllProductByCategory,
-  getAllCategory
+  getAllCategory,
+  gettopProductBySeller,
+  getCountProduct
 };
 

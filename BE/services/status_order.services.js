@@ -8,6 +8,7 @@ const buyProduct = async (body) => {
   try {
     const listItem=[]
     const b = Object.values(_.groupBy(body.products, "seller.seller._id"));
+  
     for (let index = 0; index < b.length; index++) {
       var c = 0;
       b[index].map((item) => (c += Number(item.seller.price * item.quantity)));
@@ -48,7 +49,7 @@ const buyProduct = async (body) => {
     };
   } catch (error) {
     return {
-      message: "An error occurred!",
+      message: "An erroraaa occurred!",
       success: false,
     };
   }
