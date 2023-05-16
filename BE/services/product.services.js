@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const ADMIN = require("../models/Admin");
+const Status_Orders = require("../models/StatusOrders");
 const cloudinary = require("cloudinary");
 const { body } = require("../authenticator");
 const getAllProduct = async () => {
@@ -248,23 +249,19 @@ const getProductBySeller = async (body) => {
 
 const gettopProductBySeller = async (body) => {
   try {
-    const product = await Product.find(body);
-
-
+    const find = await Status_Orders.find({ shop: body });
+    let data =[]
+    // console.log(find[0].products[0].product.category);
     
-    if (!product)
-      return {
-        message: "Can't get product of seller!",
-        success: false,
-      };
+   
     return {
-      message: "Successfully get products",
+      data: data,
+      message: "Tìm kiếm thành công",
       success: true,
-      data: product,
     };
   } catch (error) {
     return {
-      message: "An error occurred",
+      message: `lỗi ${error}`,
       success: false,
     };
   }

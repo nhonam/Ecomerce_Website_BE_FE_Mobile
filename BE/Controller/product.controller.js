@@ -180,20 +180,12 @@ const getProductBySeller = async (req, res) => {
 
 const getTopProduct = async (req, res) => {
   try {
-    console.log(req.body);
-    const productSer = await productService.gettopProductBySeller(req.body);
-    if (!productSer.success)
-      return controller.sendError(res, productSer.message, 300);
-    return controller.sendSuccess(
-      res,
-      productSer.data,
-      200,
-      productSer.message
-    );
+    const statusSer = await productService.gettopProductBySeller(req.body.id);
+    if (!statusSer.success) return controller.sendError(res, statusSer.message, 300);
+    return controller.sendSuccess(res, statusSer.data, 200, statusSer.message);
   } catch (error) {
     return controller.sendError(res);
-  }
-};
+  }}
 const searchProduct = async (req, res) => {
   try {
     const productSer = await productService.searchProduct(req.body);
