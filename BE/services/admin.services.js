@@ -35,7 +35,7 @@ const register = async (body) => {
       };
     }
 
-    const imageUrl = "https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.30497-1/84687230_2222103328096112_4091110349787365376_n.png?stp=c43.0.148.148a_dst-png_p148x148&_nc_cat=1&ccb=1-7&_nc_sid=20dd50&_nc_ohc=pQ1z097-h-IAX9EYl0p&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfAHzzRDf9_eMeinSG9uW3u26ip7oFdwwwd7RVHsFVIbZw&oe=64623E97";
+    const imageUrl = "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1684550364~exp=1684550964~hmac=535ef2fed405251f5059942a374d44757d566e9e1437f5a6207650d6cbf33a7f"
 
     const myCloud = await cloudinary.v2.uploader.upload(imageUrl, {
       folder: "avatars",
@@ -168,6 +168,40 @@ const sendOTP =  (email) => {
   
   return secret
 };
+
+const sentEmailNotification =  (email) => {
+ 
+ 
+  let transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "duygtran1706@gmail.com",
+      pass: "humtghokhhanbqjn",
+    },
+  });
+  // console.log(secret);
+ 
+  var mailOptions = {
+    from: "duygtran1706@gmail.com",
+    to: "nhonamstg@gmail.com",
+    subject: "Nho Nam Ecommerce !!!",
+    text: `Bạn đã đặt hàng thành công, Shop sẽ sớm gửi hàng cho bạn trong vài ngày tới vui lòng để ý điện thoại!!!`,
+  };
+  console.log("nam");
+  transport.sendMail(mailOptions, function (err, res) {
+    
+    if (err) {
+      console.log("Error sent mail");
+    } else {
+      
+      console.log("Message sent", secret);
+     
+    }
+    
+  });
+  
+  return true
+};
 const sendMail = async (body) => {
   try {
      
@@ -278,4 +312,5 @@ module.exports = {
   getAuth,
   sendMail,
   verifyUser,
+  sentEmailNotification
 };

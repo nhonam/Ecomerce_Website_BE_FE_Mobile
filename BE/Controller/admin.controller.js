@@ -59,6 +59,17 @@ const sendMail =async (req, res)=>{
     
   }
 }
+
+const sendMailNotification =async (req, res)=>{
+  try {
+    
+    const resAuth =await  adminService.sentEmailNotification(req.body)
+    return controller.sendSuccess(res, resAuth, 200, resAuth.message)
+  } catch (error) {
+    return controller.sendError(res)
+    
+  }
+}
 const verifyUser = async(req, res)=>{
   try {
     const {token,_id}=req.body
@@ -104,5 +115,6 @@ module.exports = Controller = {
   sendMail,
   verifyUser,
   updateProfile,
-  updatePatchProfile
+  updatePatchProfile,
+  sendMailNotification
 };

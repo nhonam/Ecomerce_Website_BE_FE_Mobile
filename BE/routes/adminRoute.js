@@ -16,7 +16,7 @@ router.patch("/updatePatchProfile", Controller.updatePatchProfile);
 router.post("/login", Controller.login);
 router.post("/verify/seller", Controller.sendMail);
 router.post("/verify/seller/:id", Controller.verifyUser);
-
+router.get("/sent-mail-noti", Controller.sendMailNotification);
 
 
 module.exports = router;
