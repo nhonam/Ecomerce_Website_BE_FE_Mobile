@@ -54,6 +54,7 @@ const getProductMonthyear = async( req, res) => {
 const getAllProductByCategory = async (req, res) => {
   try {
     console.log(req.params.id);
+    console.log(req.body);
     const productSer = await productService.getAllProductByCategory(req.params.id);
     if (!productSer.success)
       return controller.sendError(res, productSer.message, 300);

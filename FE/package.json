@@ -1,7 +1,7 @@
 {
   "name": "chiba-admin",
   "version": "0.1.0",
-  "proxy": "http://localhost:4000",
+  "proxy": "http://localhost:80",
   "private": true,
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.9.9",
