@@ -13,6 +13,7 @@ router.post("/get-top-product", Controller.getTopProduct);
 router.post("/update/:id", Controller.updateProduct)
 
 router.get("/item/:id", Controller.getProduct)
+router.get("/itemproduct/:id", Controller.getProductById)
 router.delete('/delete/:id', Controller.deleteProduct)
 router.get("/get/allProduct", Controller.getAllProduct)
 router.post("/check-product/:id", Controller.checkProductExist)

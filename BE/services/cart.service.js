@@ -3,6 +3,7 @@ const Product = require("../models/Product");
 
 const addtoCart = async (body) => {
   try {
+    console.log(body);
     const existCart = await CART.findOne({
       product: body.product,
       customer: body.customer,

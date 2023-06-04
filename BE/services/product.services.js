@@ -68,9 +68,7 @@ const updatePathProduct = async (id, body) => {
     const existProduct = await Product.findById({ _id: id });
    
     if(body.image) {
-      // const test= async ()=>{
-      //    await myCloud
-      // }
+
      
       const myCloud = await cloudinary.v2.uploader.upload(body.image, {
         folder: "products",
@@ -78,8 +76,7 @@ const updatePathProduct = async (id, body) => {
         height: 320,
         crop: "scale",
       });
-      // console.log(myCloud);
-      console.log("nádasd");
+
       body.img = {
         url: myCloud.secure_url,
         public_id: myCloud.public_id,
@@ -133,12 +130,34 @@ const getTypeProduct = async(body)=>{
     }
   }
 }
+
+const getProductById= async(id)=>{
+  try {
+      const ProductDetail = await Product.findById({_id: id})
+      if(!ProductDetail){
+        return {
+          message:"Failed! No Product",
+          success: false
+        }
+      }
+      return{
+        message: "Sucess",
+        data:ProductDetail,
+        success: true
+      }
+  } catch (error) {
+    return{
+      message:"Failed!",
+      success: false
+    }
+  }
+}
+
 const getProduct = async (id, body) => {
   try {
    
     // const product = await Product.find({ name_product:body.name_product,tag:body.tag, price:body.price, quantity:body.quantity });
     
-    console.log(body);
     const productcheck = await Product.aggregate([
       {
         $match: {
@@ -181,17 +200,12 @@ const getProduct = async (id, body) => {
       }
     ])
 
-    console.log("------------");
-    console.log(productcheck);
-    console.log(productcheck[0].count);
-
     if (productcheck[0].count>=2)
       return {
         message: "Product no found!",
         success: true,
       
       };
-      console.log("chua xoa");
     return {
       message: "Successfully get product",
       success: false,
@@ -402,6 +416,7 @@ module.exports = {
   getAllProductByCategory,
   getAllCategory,
   gettopProductBySeller,
-  getCountProduct
+  getCountProduct,
+  getProductById
 };
 

@@ -94,7 +94,6 @@ const login = async (body) => {
     }
     const token = jwtService.createToken(admin._id);
     admin.birthday= formatDate(new Date(admin.birthday))
-    console.log(admin.birthday);
     return {
       message: "Login Successfully!",
       success: true,
@@ -187,7 +186,6 @@ const sentEmailNotification =  (email) => {
     subject: "Nho Nam Ecommerce !!!",
     text: `Bạn đã đặt hàng thành công, Shop sẽ sớm gửi hàng cho bạn trong vài ngày tới vui lòng để ý điện thoại!!!`,
   };
-  console.log("nam");
   transport.sendMail(mailOptions, function (err, res) {
     
     if (err) {
@@ -221,13 +219,7 @@ const sendMail = async (body) => {
 };
 const verifyUser = async (id, token, _id) => {
   try {
-    console.log("----------");
-    console.log(id);console.log(token);console.log(_id);
-    console.log("----------");
-// //     ----------
-// // JB2H2JJDN5XHWTKUPM7H2ORTEN4VOLT3
-// // 617204
-// // 6438f641adf2aef8f055
+
     const isValid = Speakeasy.totp.verify({
       secret: id,
       encoding: "base32",

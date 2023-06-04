@@ -5,7 +5,7 @@ const sendAImessage = async (req, res) => {
       const resAI =  AIservice.sendAImessage(req.body);
       console.log(resAI);
       if (!resAI.success)
-        return controller.sendError(res,resAI.message,300);
+        return controller.sendError(res,resAI.message,400);
       return controller.sendSuccess(res, resAI.data, 200, resAuth.message);
     } catch (error) {
       return controller.sendError(res);

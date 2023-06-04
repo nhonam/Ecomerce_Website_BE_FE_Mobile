@@ -24,7 +24,7 @@ const gettypeProduct = async (data) => {
   return response.data;
 };
 const getProduct = async (id) => {
-  const response = await axios.get(`${API_URL}/item/${id}`);
+  const response = await axios.get(`${API_URL}/itemproduct/${id}`);
   return response.data;
 };
 const deleteProduct = async (id) => {
