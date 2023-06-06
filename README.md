@@ -11,3 +11,7 @@ Bước 3: Mở folder web
   
  Bước 4:
   npm start để start chương trình ( cả fe và be )
+  
+ Bước 5: Để chạy được chatbot
+  - cài python 3.7
+  - run file tranning.py
